@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "src": "/data/1.txt"
+  },
+  {
+    "id": 2,
+    "src": "/data/2.txt"
+  },
+  {
+    "id": 3,
+    "src": "/data/3.txt"
+  },
+  {
+    "id": 4,
+    "src": "/data/3.txt"
+  }
+]

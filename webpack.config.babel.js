@@ -2,6 +2,10 @@ import path from 'path';
 import webpack from 'webpack';
 
 const js = {
+  // externals: {
+  //   'react': 'React',
+  //   'react-dom': 'ReactDOM',
+  // },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
