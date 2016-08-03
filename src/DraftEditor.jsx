@@ -33,8 +33,32 @@ class MyEditor extends Component {
   discardHandler() {
     this.props.router.push(`/entry/${this.props.params.entryID}`);
   }
-  submitHandler(e) {
-    console.log('e', e);
+  submitHandler() {
+    const text = this.state.editorState.getCurrentContent().getPlainText();
+    console.log(text);
+    const API_HOST = 'http://localhost:9292';
+    const postURI = `${API_HOST}/entry`;
+
+    const title = text.split(/\r?\n/)[0];
+    const content = text.split(/\r?\n/).splice(1).join('\n');
+    const summary = content.substr(0, 100);
+    const author = 'test';
+    const tags = ['test'];
+    const body = { title, content, summary, author, tags };
+
+    const postOptions = {
+      method: 'POST',
+      body,
+    };
+    fetch(postURI, postOptions)
+      .then((res) => {
+        console.log(res);
+        alert('submit');
+        this.props.router.push(`/entry/${this.props.params.entryID}`);
+      })
+      .catch(e => {
+        throw new Error(e);
+      });
   }
   render() {
     const { editorState } = this.state;
