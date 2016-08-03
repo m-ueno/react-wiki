@@ -11,6 +11,7 @@ class MyEditor extends Component {
     this.state = { editorState: initialEditorState };
     this.onChange = (editorState) => this.setState({ editorState });
     this.discardHandler = this.discardHandler.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
   }
   componentDidMount() {
     this.fetchData();
@@ -32,6 +33,9 @@ class MyEditor extends Component {
   discardHandler() {
     this.props.router.push(`/entry/${this.props.params.entryID}`);
   }
+  submitHandler(e) {
+    console.log('e', e);
+  }
   render() {
     const { editorState } = this.state;
     const style = {
@@ -47,6 +51,7 @@ class MyEditor extends Component {
       </div>
       <Button bsStyle="link">Preview</Button>
       <Button bsStyle="link" onClick={this.discardHandler}>Discard</Button>
+      <Button bsStyle="link" onClick={this.submitHandler}>Submit</Button>
     </div>);
   }
 }
