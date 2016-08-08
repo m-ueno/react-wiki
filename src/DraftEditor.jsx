@@ -59,6 +59,7 @@ class MyEditor extends Component {
       .catch(e => {
         throw new Error(e);
       });
+      */
   }
   discardHandler() {
     this.props.router.push(`/entry/${this.props.params.entryID}`);
