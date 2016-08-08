@@ -8,6 +8,7 @@ import Entry from './src/Entry.jsx';
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
+      <Route path="new" component={NewEntry} />
       <Route path="/entry/:entryID" component={Entry}>
         <Route path="edit" component={DraftEditor} />
       </Route>

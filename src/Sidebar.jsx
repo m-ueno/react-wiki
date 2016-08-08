@@ -6,9 +6,37 @@ class Sidebar extends Component {
     super();
     this.state = { allEntries: [] };
     this.fetchRecent = this.fetchRecent.bind(this);
+    this.fetchRecentExternalDB = this.fetchRecentExternalDB.bind(this);
   }
   componentDidMount() {
-    this.fetchRecent();
+    this.fetchRecentExternalDB();
+  }
+  fetchRecentExternalDB() {
+    const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
+    const queryStr = `{
+  entries(limit:20) {
+ 		id
+    title
+    author {
+      name
+    }
+  }
+}`;
+    const queryOptions = {
+      method: 'GET',
+      mode: 'cors',
+    };
+    const queryURI = `${graphqlEndpoint}?query=${encodeURIComponent(queryStr)}`;
+
+    fetch(queryURI, queryOptions)
+      .then(res => res.json())
+      .then(json => {
+        console.log('entries', json);
+        this.setState({ allEntries: json.data.entries });
+      })
+      .catch(e => {
+        console.error(e);
+      });
   }
   fetchRecent() {
     fetch('/data/index.json')
