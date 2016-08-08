@@ -68,6 +68,7 @@ class MyEditor extends Component {
     this.props.router.push(`/entry/${this.props.params.entryID}`);
   }
   submitHandler() {
+    const eID = this.props.entryID || this.props.params.entryID;
     const text = this.state.editorState.getCurrentContent().getPlainText();
     const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
 
@@ -82,7 +83,9 @@ class MyEditor extends Component {
     // const tags = ['test'];
     // const body = { title, content, summary, author, tags };
 
-    const queryStr = `mutation {
+    let queryStr;
+    if (eID === '0') {
+      queryStr = `mutation {
   createEntry(
     title: "${title}",
     content: ${JSON.stringify(content)},
@@ -92,6 +95,19 @@ class MyEditor extends Component {
   }
 }
 `;
+    } else {
+      queryStr = `mutation {
+  updateEntry(
+    entryID: ${parseInt(eID, 10)},
+    title: "${title}",
+    content: ${JSON.stringify(content)},
+    user_id: ${authorID},
+  ) {
+    id
+  }
+}
+`;
+    }
     console.log(queryStr);
 
     const postOptions = {
