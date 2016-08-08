@@ -18,7 +18,37 @@ class MyEditor extends Component {
   }
   fetchData() {
     const eID = this.props.entryID || this.props.params.entryID;
-    const uri = `/data/${eID}.txt`;
+    const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
+    const queryStr = `{
+  entry(id:${parseInt(eID, 10)}) {
+    title
+    content
+    author {
+      id
+      name
+    }
+  }
+}`;
+    const queryOptions = {
+      method: 'GET',
+      mode: 'cors',
+    };
+    const queryURI = `${graphqlEndpoint}?query=${encodeURIComponent(queryStr)}`;
+
+    fetch(queryURI, queryOptions)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        const { content, title } = json.data.entry;
+        const con = ContentState.createFromText(`${title}\n${content}`);
+        const editorState = EditorState.createWithContent(con);
+        this.setState({ editorState });
+      })
+      .catch(e => {
+        console.error(e);
+      });
+
+    /*
     fetch(uri)
       .then(r => r.text())
       .then(txt => {
