@@ -14,7 +14,10 @@ class MyEditor extends Component {
     this.submitHandler = this.submitHandler.bind(this);
   }
   componentDidMount() {
-    this.fetchData();
+    const eID = this.props.entryID || this.props.params.entryID;
+    if (parseInt(eID, 10) > 0) {
+      this.fetchData();
+    }
   }
   fetchData() {
     const eID = this.props.entryID || this.props.params.entryID;
