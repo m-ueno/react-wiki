@@ -14,16 +14,16 @@ class MyEditor extends Component {
     this.submitHandler = this.submitHandler.bind(this);
   }
   componentDidMount() {
-    const eID = this.props.entryID || this.props.params.entryID;
-    if (parseInt(eID, 10) > 0) {
+    const eid = this.props.entryID || this.props.params.entryID;
+    this.eID = parseInt(eid, 10);
+    if (this.eID > 0) {
       this.fetchData();
     }
   }
   fetchData() {
-    const eID = this.props.entryID || this.props.params.entryID;
     const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
     const queryStr = `{
-  entry(id:${parseInt(eID, 10)}) {
+  entry(id:${this.eID}) {
     title
     content
     author {
@@ -68,7 +68,7 @@ class MyEditor extends Component {
     this.props.router.push(`/entry/${this.props.params.entryID}`);
   }
   submitHandler() {
-    const eID = this.props.entryID || this.props.params.entryID;
+    const eID = this.eID;
     const text = this.state.editorState.getCurrentContent().getPlainText();
     const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
 
@@ -84,7 +84,7 @@ class MyEditor extends Component {
     // const body = { title, content, summary, author, tags };
 
     let queryStr;
-    if (eID === '0') {
+    if (eID === 0) {
       queryStr = `mutation {
   createEntry(
     title: "${title}",
@@ -98,7 +98,7 @@ class MyEditor extends Component {
     } else {
       queryStr = `mutation {
   updateEntry(
-    entryID: ${parseInt(eID, 10)},
+    entryID: ${this.eID},
     title: "${title}",
     content: ${JSON.stringify(content)},
     user_id: ${authorID},
