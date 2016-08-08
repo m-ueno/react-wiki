@@ -35,29 +35,48 @@ class MyEditor extends Component {
   }
   submitHandler() {
     const text = this.state.editorState.getCurrentContent().getPlainText();
-    console.log(text);
-    const API_HOST = 'http://localhost:9292';
-    const postURI = `${API_HOST}/entry`;
+    const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
 
-    const title = text.split(/\r?\n/)[0];
-    const content = text.split(/\r?\n/).splice(1).join('\n');
-    const summary = content.substr(0, 100);
-    const author = 'test';
-    const tags = ['test'];
-    const body = { title, content, summary, author, tags };
+    const title = text.split(/\r?\n/)[0].trim();
+    const content = text.split(/\r?\n/)
+      .splice(1)
+      .join('\n')
+      .trim()
+      ;
+    // const summary = content.substr(0, 100);
+    const authorID = 1;
+    // const tags = ['test'];
+    // const body = { title, content, summary, author, tags };
+
+    const queryStr = `mutation {
+  createEntry(
+    title: "${title}",
+    content: "${content}",
+    user_id: ${authorID},
+  ) {
+    id
+  }
+}
+`;
+    console.log(queryStr);
 
     const postOptions = {
       method: 'POST',
-      body,
+      mode: 'cors',
     };
-    fetch(postURI, postOptions)
-      .then((res) => {
-        console.log(res);
+
+    const queryURI = `${graphqlEndpoint}?query=${encodeURIComponent(queryStr)}`;
+
+    fetch(queryURI, postOptions)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
         alert('submit');
-        this.props.router.push(`/entry/${this.props.params.entryID}`);
+        const eid = json.data.createEntry.id;
+        this.props.router.push(`/entry/${eid}`);
       })
       .catch(e => {
-        throw new Error(e);
+        console.error(e);
       });
   }
   render() {
