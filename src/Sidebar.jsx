@@ -50,7 +50,7 @@ class Sidebar extends Component {
   }
   render() {
     const recent = this.state.allEntries.map(e =>
-      <li key={e.id}><Link to={`/entry/${e.id}`}>{e.id}</Link></li>
+      <li key={e.id}><Link to={`/entry/${e.id}`}>{e.title}</Link></li>
     );
     return (
       <div>
