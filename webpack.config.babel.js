@@ -9,6 +9,9 @@ const js = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.EnvironmentPlugin([
+      'GRAPHQL_ENDPOINT',     // example: http://example.com:4567/graphql
+    ]),
   ],
   entry: './index.jsx',
   output: {
