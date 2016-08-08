@@ -25,20 +25,33 @@ class Entry extends Component {
   editHandler() {
     this.props.router.push(`/entry/${this.eID()}/edit`);
   }
-  fetchData(id) {
-    const eID = id;
-    const uri = `/data/${eID}.txt`;
-    fetch(uri)
-      .then(r => r.text())
-      .then(text => {
-        const lines = text.split(/\r?\n/);
-        console.dir(lines);
-        const title = lines[0];
-        const content = lines.slice(1).join('\n');
+  fetchData(eID) {
+    const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
+    const queryStr = `{
+  entry(id:${parseInt(eID, 10)}) {
+    title
+    content
+    author {
+      id
+      name
+    }
+  }
+}`;
+    const queryOptions = {
+      method: 'GET',
+      mode: 'cors',
+    };
+    const queryURI = `${graphqlEndpoint}?query=${encodeURIComponent(queryStr)}`;
+
+    fetch(queryURI, queryOptions)
+      .then(res => res.json())
+      .then(json => {
+        console.log('entry', json);
+        const { title, content } = json.data.entry;
         this.setState({ title, content });
       })
       .catch(e => {
-        throw new Error(e);
+        console.error(e);
       });
   }
   render() {
