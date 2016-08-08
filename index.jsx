@@ -4,6 +4,7 @@ import { Router, Route, browserHistory } from 'react-router';
 import App from './src/App.jsx';
 import DraftEditor from './src/DraftEditor.jsx';
 import Entry from './src/Entry.jsx';
+import NewEntry from './src/NewEntry.jsx';
 
 render((
   <Router history={browserHistory}>
