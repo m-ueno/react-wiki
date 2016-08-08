@@ -51,7 +51,7 @@ class MyEditor extends Component {
     const queryStr = `mutation {
   createEntry(
     title: "${title}",
-    content: "${content}",
+    content: ${JSON.stringify(content)},
     user_id: ${authorID},
   ) {
     id
