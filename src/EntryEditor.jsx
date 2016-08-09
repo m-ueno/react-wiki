@@ -20,6 +20,9 @@ class MyEditor extends Component {
       this.fetchData();
     }
   }
+  // componentWillReceiveProps() {
+  //   this.fetchData();
+  // }
   fetchData() {
     const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
     const queryStr = `{
@@ -68,6 +71,7 @@ class MyEditor extends Component {
     this.props.router.push(`/entry/${this.props.params.entryID}`);
   }
   submitHandler() {
+    // handle create or update
     const eID = this.eID;
     const text = this.state.editorState.getCurrentContent().getPlainText();
     const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
@@ -122,7 +126,12 @@ class MyEditor extends Component {
       .then(json => {
         console.log(json);
         alert('submit');
-        const eid = json.data.createEntry.id;
+        let eid;
+        if (eID === 0) {
+          eid = json.data.createEntry.id;
+        } else {
+          eid = json.data.updateEntry.id;
+        }
         this.props.router.push(`/entry/${eid}`);
       })
       .catch(e => {

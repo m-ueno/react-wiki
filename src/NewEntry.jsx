@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import DraftEditor from './DraftEditor.jsx';
+import EntryEditor from './EntryEditor.jsx';
 
 class NewEntry extends Component {
   render() {
     return (<div>
       <h2>New entry</h2>
-      <DraftEditor entryID="0" />
+      <EntryEditor entryID="0" />
     </div>);
   }
 }
