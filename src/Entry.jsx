@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
+import ReactMarkdown from 'react-markdown';
 
 class Entry extends Component {
   constructor() {
@@ -53,13 +54,10 @@ class Entry extends Component {
       });
   }
   render() {
-    const preStyle = { whiteSpace: 'pre-wrap' };
     return (
       <div>
         <h3>{this.state.title}</h3>
-        <div style={preStyle}>
-          {this.state.content}
-        </div>
+        <ReactMarkdown source={this.state.content} />
         {
           this.props.children
           ? this.props.children
