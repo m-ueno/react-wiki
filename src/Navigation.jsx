@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { withRouter, Link } from 'react-router';
 import {
   Button,
   FormGroup,
@@ -8,7 +8,15 @@ import {
   Navbar,
 } from 'react-bootstrap';
 
-export default class MyNavbar extends Component {
+class MyNavbar extends Component {
+  constructor() {
+    super();
+    this.createHandler = this.createHandler.bind(this);
+  }
+  createHandler() {
+    console.log('new', this.props);
+    this.props.router.push('/new');
+  }
   render() {
     return (
       <Navbar>
@@ -30,7 +38,7 @@ export default class MyNavbar extends Component {
           </Nav>
           <Nav pullRight>
             <Navbar.Form>
-              <Button bsStyle="success">New Entry</Button>
+              <Button bsStyle="success" onClick={this.createHandler}>New Entry</Button>
             </Navbar.Form>
           </Nav>
         </Navbar.Collapse>
@@ -38,3 +46,8 @@ export default class MyNavbar extends Component {
     );
   }
 }
+MyNavbar.propTypes = {
+  router: React.PropTypes.object,
+};
+
+export default withRouter(MyNavbar);
