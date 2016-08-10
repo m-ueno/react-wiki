@@ -25,7 +25,7 @@ class Entry extends Component {
   editHandler() {
     this.props.router.push(`/entry/${this.eID()}/edit`);
   }
-  fetchData(eID) {
+  fetchData(eID) { // to handle nextProps.eID, need argument
     const graphqlEndpoint = process.env.GRAPHQL_ENDPOINT;
     const queryStr = `{
   entry(id:${parseInt(eID, 10)}) {
