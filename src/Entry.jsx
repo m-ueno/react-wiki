@@ -14,10 +14,8 @@ class Entry extends Component {
     this.fetchData(this.eID());
   }
   componentWillReceiveProps(nextProps) {
-    const eID = this.props.entryID || this.props.params.entryID;
-    if (nextProps.params.entryID !== eID) {
-      this.fetchData(nextProps.params.entryID);
-    }
+    // quickfix: fetch everytime
+    this.fetchData(nextProps.params.entryID);
   }
   eID() {
     return this.props.entryID || this.props.params.entryID;
