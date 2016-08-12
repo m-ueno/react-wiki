@@ -50,6 +50,11 @@ const js = {
         test: /\.jsx$/,
         // include: path.resolve('src'),
         loaders: ['react-hot', 'babel'],
+        exclude: path.resolve('node_modules'),
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader',
       },
     ],
   },

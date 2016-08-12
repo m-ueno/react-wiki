@@ -1,11 +1,12 @@
 {
-  "name": "simple-image-gallery",
+  "name": "react-wiki",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "test": "mocha --colors --compilers js:babel-register,jsx:babel-register --recursive test"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +28,8 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.0",
+    "chai": "*",
+    "enzyme": "*",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-loader": "^1.3.0",
@@ -35,6 +38,10 @@
     "eslint-plugin-react": "^5.2.2",
     "file-loader": "^0.9.0",
     "http-server": "^0.9.0",
+    "jsdom": "^9.4.2",
+    "mocha": "*",
+    "react-addons-test-utils": "^15.3.0",
+    "sinon": "^1.17.5",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1"
