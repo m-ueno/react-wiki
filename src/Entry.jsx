@@ -57,11 +57,13 @@ class Entry extends Component {
     return (
       <div>
         <h3>{this.state.title}</h3>
-        <ReactMarkdown source={this.state.content} />
         {
           this.props.children
           ? this.props.children
-          : <Button bsStyle="link" onClick={this.editHandler}>Edit</Button>
+          : <div>
+            <ReactMarkdown source={this.state.content} />
+            <Button bsStyle="link" onClick={this.editHandler}>Edit</Button>
+          </div>
         }
       </div>
     );

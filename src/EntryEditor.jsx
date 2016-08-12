@@ -1,7 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { Editor, EditorState, ContentState } from 'draft-js';
 import { Button } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
+
+class MarkdownPreview extends Component {
+  render() {
+    return (<div>
+      <ReactMarkdown source={this.props.txt} />
+    </div>);
+  }
+}
+MarkdownPreview.propTypes = {
+  txt: PropTypes.string,
+};
 
 class MyEditor extends Component {
   constructor(props) {
@@ -151,6 +163,7 @@ class MyEditor extends Component {
       <div style={style}>
         <Editor editorState={editorState} onChange={this.onChange} />
       </div>
+      <MarkdownPreview txt={this.state.editorState.getCurrentContent().getPlainText()} />
       <Button bsStyle="link">Preview</Button>
       <Button bsStyle="link" onClick={this.discardHandler}>Discard</Button>
       <Button bsStyle="link" onClick={this.submitHandler}>Submit</Button>
