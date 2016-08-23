@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
-    "test": "mocha --colors --compilers js:babel-register,jsx:babel-register --recursive test"
+    "test": "mocha --colors --compilers js:babel-register,jsx:babel-register --recursive test",
+    "test:cover": "cross-env NODE_ENV=test nyc npm test"
   },
   "author": "",
   "license": "ISC",
@@ -47,5 +48,23 @@
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1"
+  },
+  "nyc": {
+    "include": [
+      "src/*.jsx"
+    ],
+    "extension": [
+      ".jsx",
+      ".js"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
   }
 }
